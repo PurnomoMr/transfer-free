@@ -1,7 +1,7 @@
 <?php 
-namespace Db;
+namespace Core\Db;
 
-include_once("../config/config.php");
+include_once(PATH_ROOT."/config/config.php");
 
 class database {
     

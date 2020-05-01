@@ -1,6 +1,5 @@
 <?php
-namespace Router;
-
+include(PATH_ROOT."/core/Response.php");
 
 class Router
 {
@@ -31,8 +30,15 @@ class Router
     if(array_key_exists($url, self::$routes)) {
       return self::$routes[$url];
     } else {
-      return $this->error_404($url, self::$routes);
+      self::not_found();
     }
+  }
+
+  protected function not_found() {
+      $response = new Core\response();
+      $response->error("Page not found!", 404);
   }
   
 }
+
+?>
