@@ -1,5 +1,5 @@
 <?php 
-namespace Response;
+namespace Core;
 
 class Response
 {
@@ -9,15 +9,13 @@ class Response
         $this->status = [
             200 => '200 OK',
             400 => '400 Bad Request',
+            404 => '404 Page Not Found',
             422 => 'Unprocessable Entity',
             500 => '500 Internal Server Error'
         ];
     }
 
     public function success($data = [], $code = 200) {
-        
-       // clear the old headers
-        header_remove();
         // set the actual code
         http_response_code($code);
         // set the header to make sure cache is forced
@@ -31,29 +29,22 @@ class Response
             "payload"=> $data
         );
 
-        header("Status: ". $status[$code]);
+        header("Status: ". $this->status[$code]);
 
-        return json_encode($success);
+        exit(json_encode($success, JSON_FORCE_OBJECT));
     }
 
-    public function error($data = [], $code = 500) {
-         // clear the old headers
-         header_remove();
-         // set the actual code
-         http_response_code($code);
-         // set the header to make sure cache is forced
-         header("Cache-Control: no-transform,public,max-age=300,s-maxage=900");
-         // treat this as json
-         header('Content-Type: application/json');
- 
+    public function error($data, $code = 500) {
+
          $error = array(
              "status"=> 'error',
              "statusCode"=> $code,
              "payload"=> $data
          );
  
-         header("Status: ". $status[$code]);
- 
-         return json_encode($error);
+         exit(json_encode($error, JSON_FORCE_OBJECT));
     }
 }
+
+
+?>

@@ -1,12 +1,12 @@
 <?php
 
 $config = array(
-	'database_name' => 'rest_api',
-	'database_host' => 'localhost',
+	'database_name' => 'bank_disborse',
+	'database_host' => '127.0.0.1',
 	'database_user' => 'root',
-	'database_password' => 'password',
+	'database_password' => 'mysql',
 	'database_prefix' => '',
-	'database_engine' => 'DbPDO'
+	'database_engine' => 'mysqli'
 );
 
 define('_DB_SERVER_', $config['database_host']);
