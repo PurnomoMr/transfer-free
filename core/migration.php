@@ -33,7 +33,7 @@ class Migration {
         if(isset($migration_filename)) {
             
             include_once(PATH_ROOT."/migrations/".$migration_filename .".php");
-            $load_class .= substr($migration_filename, 10);
+            $load_class .= substr($migration_filename, 17);
             $migration = new $load_class;
 
             $migration->up();
@@ -41,12 +41,13 @@ class Migration {
             $filename = self::read_all();
             foreach($filename as $class_name)
             {   
-                $class = explode('.php', substr($class_name, 10))[0];
+                $class = explode('.php', substr($class_name, 17))[0];
                 include_once(PATH_ROOT."/migrations/".$class_name);
                 $load_class .= $class;
                 $migration = new $load_class;
                 
                 $migration->up();
+                $load_class = "\Migration\\";
             }
         }
 
@@ -58,7 +59,7 @@ class Migration {
         if(isset($migration_filename)) {
             
             include_once(PATH_ROOT."/migrations/".$migration_filename .".php");
-            $load_class .= substr($migration_filename, 10);
+            $load_class .= substr($migration_filename, 17);
             $migration = new $load_class;
 
             $migration->down();
@@ -66,7 +67,7 @@ class Migration {
             $filename = self::read_all();
             foreach($filename as $class_name)
             {   
-                $class = explode('.php', substr($class_name, 10))[0];
+                $class = explode('.php', substr($class_name, 17))[0];
                 include_once(PATH_ROOT."/migrations/".$class_name);
                 $load_class .= $class;
                 $migration = new $load_class;

@@ -22,7 +22,7 @@ class database {
                 $this->password, 
                 $this->database
             );
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             echo "Connection error: " .  $e->getMessage(), "\n";
         }
         
