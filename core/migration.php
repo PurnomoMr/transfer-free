@@ -73,6 +73,7 @@ class Migration {
                 $migration = new $load_class;
                 
                 $migration->down();
+                $load_class = "\Migration\\";
             }
         }
     }

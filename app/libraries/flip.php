@@ -19,10 +19,12 @@ class Flip
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => "POST",
+            CURLOPT_SSL_VERIFYHOST => false,
+            CURLOPT_SSL_VERIFYPEER => false,
             CURLOPT_POSTFIELDS => json_encode($options->body),
             CURLOPT_HTTPHEADER => $options->header
         );
-        var_dump($curl_opt);
+        
         curl_setopt_array($curl, $curl_opt);
 
         // EXECUTE:
@@ -101,14 +103,19 @@ class Flip
         $options = new \stdClass;
         $options->url = FLIP_URL.$url;
         $options->header[] = "Authorization: Basic ". base64_encode(SECRET_KEY.":");
-        $options->header[] = "Content-Type: application/x-www-form-urlencoded";
+        $options->header[] = "Content-Type: application/json";
 
         if($url == "disburse") {
-            $options->body = new \stdClass;
-            $options->body->bank_code = $data['bank_code'];
-            $options->body->account_number = $data['account_number'];
-            $options->body->amount = (int) $data['amount'];
-            $options->body->remark = $data['remark'];
+            // $options->body = new \stdClass;
+            $options->body["bank_code"] = $data['bank_code'];
+            $options->body["account_number"] = $data['account_number'];
+            $options->body["amount"] = (int) $data['amount'];
+            $options->body["remark"] = $data['remark'];
+            // $options->body = new \stdClass;
+            // $options->body->bank_code = $data['bank_code'];
+            // $options->body->account_number = $data['account_number'];
+            // $options->body->amount = (int) $data['amount'];
+            // $options->body->remark = $data['remark'];
         } else {
             $options->url .= $data['ud_code'];
         }

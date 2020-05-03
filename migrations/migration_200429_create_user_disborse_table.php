@@ -15,6 +15,7 @@ class create_user_disborse_table extends \Core\Db\Database {
             ud_date datetime NOT NULL,
             ud_amount int(11) NOT NULL,
             ud_beneficiary_name varchar(150) NOT NULL,
+            ud_status varchar(150) NOT NULL,
             ud_remark text,
             ud_receipt varchar(50) DEFAULT NULL,
             ud_time_served datetime DEFAULT NULL,
