@@ -24,7 +24,7 @@ class Disborse
         if($trx_id <= 0) {
             $response->error("Transaction id not found.", 401);
         }
-        $user_disborse = new \stdClass;
+        $result = new \stdClass;
         $disborse = $model_disborse->get_disborse_by_ud_code($trx_id);
         if(empty($disborse)) {
             $response->error("Transaction id not found.", 401);
@@ -38,8 +38,8 @@ class Disborse
                 'ud_code' => $disborse->ud_code,
             );
             $data_res = $flip->disborseStatus($data);
-
-            if($data_res["http_code"] !== "200") { 
+            
+            if($data_res["http_code"] != "200") { 
                 $response->error("Please try again.", 401);
             } else {
                 $data_disborse = json_decode($data_res['data'], true);
@@ -66,19 +66,18 @@ class Disborse
                     
                     $create_user_disborse['ud_receipt'] = $data_disborse["receipt"];
                 }
-                $ud_id = $model_user_disborse->update_user_disborse($disborse->ud_id, $create_user_disborse);
+                $model_user_disborse->update_user_disborse($disborse->ud_id, $create_user_disborse);
                 
                 $create_disborse = array(
-                    'ud_id' => $ud_id,
+                    'ud_id' => $disborse->ud_id,
                     'ud_code' => $data_disborse["id"],
                     'ds_status' => $data_disborse["status"],
                     'created_date' => date("Y-m-d H:m:s")
                 );
     
                 $model_disborse->create_disborse($create_disborse);
-    
-                $result = $model_user_disborse->get_user_disborse($ud_id);
-    
+                
+                $result = $model_user_disborse->get_user_disborse($disborse->ud_id);
             }
         }
 

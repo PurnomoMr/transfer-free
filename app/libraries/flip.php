@@ -53,11 +53,11 @@ class Flip
         }
     }
 
-    public function disborseStatus($data, $action = "status") {
+    public function disborseStatus($data, $action = "disburse/") {
         $curl = curl_init();;
 
         // OPTIONS:
-        $options = $this->getOptions($data);
+        $options = $this->getOptions($data, $action);
 
         $curl_opt = array(
             CURLOPT_URL => $options->url,
@@ -65,10 +65,12 @@ class Flip
             CURLOPT_ENCODING => "",
             CURLOPT_MAXREDIRS => 10,
             CURLOPT_TIMEOUT => 30,
+            CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_HEADER => 1,
             CURLOPT_CUSTOMREQUEST => "GET",
-            CURLOPT_POSTFIELDS => $options->body,
+            CURLOPT_SSL_VERIFYHOST => false,
+            CURLOPT_SSL_VERIFYPEER => false,
+            CURLOPT_POSTFIELDS => json_encode($options->body),
             CURLOPT_HTTPHEADER => $options->header
         );
         curl_setopt_array($curl, $curl_opt);
@@ -111,11 +113,6 @@ class Flip
             $options->body["account_number"] = $data['account_number'];
             $options->body["amount"] = (int) $data['amount'];
             $options->body["remark"] = $data['remark'];
-            // $options->body = new \stdClass;
-            // $options->body->bank_code = $data['bank_code'];
-            // $options->body->account_number = $data['account_number'];
-            // $options->body->amount = (int) $data['amount'];
-            // $options->body->remark = $data['remark'];
         } else {
             $options->url .= $data['ud_code'];
         }

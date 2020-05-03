@@ -61,12 +61,12 @@ class Model_user_disborse extends \Core\Db\Database
     }
 
     public function update_user_disborse($id, $data) {
-        $data_columns = implode(" = ? , ",array_keys($data));
+        $data_columns = implode(" = ? , ",array_keys($data))." = ? ";
         $data_values = array_values($data);
         $data_values[count($data_values) + 1] = $id;
-        $sql = "UPDATE ".self::$table_name." SET {$data_columns} WHERE ud_id = ? ; ";
+        $sql = "UPDATE ".self::$table_name." SET {$data_columns} WHERE id = ? ; ";
         $process = mysqli_prepare($this->db, $sql);
-
+        
         $types = str_repeat('s', count($data_values));
         $process->bind_param($types,  ...$data_values);
         $process->execute();
