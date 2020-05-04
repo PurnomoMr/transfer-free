@@ -1,0 +1,94 @@
+{
+	"info": {
+		"_postman_id": "1086a79f-c568-48d7-979b-28186169ce99",
+		"name": "Tranfer Fee",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Check Status Transaction",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8000/transfer/status?trx_id=2003032",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"transfer",
+						"status"
+					],
+					"query": [
+						{
+							"key": "trx_id",
+							"value": "2003032"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Make Transaction",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "bank_code",
+							"value": "bca",
+							"type": "text"
+						},
+						{
+							"key": "account_number",
+							"value": "08456262626",
+							"type": "text"
+						},
+						{
+							"key": "amount",
+							"value": "100000",
+							"type": "text"
+						},
+						{
+							"key": "remark",
+							"value": "Test",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8000/transfer",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"transfer"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
